@@ -21,7 +21,6 @@ const PropertyList = () => {
     const [selected, setSelected] = useState(null);
     const [filterType, setFilterType] = useState('');
 
-    // Фільтрація за вибраним типом
     const filtered = filterType
         ? properties.filter(p => p.type === filterType)
         : properties;
@@ -30,7 +29,6 @@ const PropertyList = () => {
         <div className="container mt-4">
             <h2 className="mb-4">Пропозиції нерухомості</h2>
 
-            {/* Вбудована форма вибору типу */}
             <form className="mb-4">
                 <h5>Фільтр за типом нерухомості:</h5>
                 {['Квартира', 'Будинок', 'Нежитлова'].map(type => (

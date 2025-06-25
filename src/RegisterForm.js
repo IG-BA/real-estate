@@ -1,14 +1,11 @@
-// src/pages/Register.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -25,8 +22,7 @@ export default function Register() {
             setSuccess('Реєстрація успішна. Ви можете увійти.');
             setUsername('');
             setPassword('');
-            // За бажанням перенаправити на вхід:
-            // navigate('/login');
+
         } catch (err) {
             setError(err.response?.data?.message || 'Помилка при реєстрації');
         }
