@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -10,7 +9,6 @@ const app = express();
 const PORT = 5000;
 const USERS_FILE = path.join(__dirname, 'users.json');
 
-// Middleware
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
@@ -23,12 +21,11 @@ app.use(session({
     cookie: { secure: false } // для HTTP, не HTTPS
 }));
 
-// Переконуємось, що файл існує
+
 if (!fs.existsSync(USERS_FILE)) {
     fs.writeFileSync(USERS_FILE, '[]');
 }
 
-// Допоміжні функції
 const getUsers = () => {
     const data = fs.readFileSync(USERS_FILE, 'utf8');
     try {
@@ -42,7 +39,6 @@ const saveUsers = (users) => {
     fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
 };
 
-// 🟩 Реєстрація
 app.post('/api/register', (req, res) => {
     const { username, password } = req.body;
 
@@ -64,7 +60,6 @@ app.post('/api/register', (req, res) => {
     res.status(201).json({ message: 'Реєстрація успішна' });
 });
 
-// 🟦 Вхід
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
     const users = getUsers();
@@ -79,7 +74,6 @@ app.post('/api/login', (req, res) => {
     res.json({ message: 'Успішний вхід' });
 });
 
-// 🟨 Отримання поточного користувача
 app.get('/api/user', (req, res) => {
     if (req.session.user) {
         res.json({ user: req.session.user });
@@ -88,13 +82,11 @@ app.get('/api/user', (req, res) => {
     }
 });
 
-// 🔴 Вихід
 app.post('/api/logout', (req, res) => {
     req.session.destroy();
     res.json({ message: 'Вихід виконано' });
 });
 
-// 🔵 Запуск сервера
 app.listen(PORT, () => {
     console.log(`🚀 Сервер працює на http://localhost:${PORT}`);
 });
